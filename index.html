@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>মানি ম্যানেজার- পিডিএফ রিপোর্ট</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fas fa-wallet"></i>
+                মানি ম্যানেজার প্রো
+                <span class="db-status" id="dbStatus">ডাটাবেজ চালু হচ্ছে...</span>
+            </h1>
+            <div class="header-actions">
+                <button class="btn-pdf" id="pdfReportBtn">
+                    <i class="fas fa-file-pdf"></i> পিডিএফ রিপোর্ট
+                </button>
+                <button class="btn-category" id="categoryMgmtBtn">
+                    <i class="fas fa-edit"></i> ক্যাটাগরি ব্যবস্থাপনা
+                </button>
+            </div>
+        </div>
+
+        <div class="balance-cards">
+            <div class="card total-balance">
+                <h3>মোট ব্যালেন্স</h3>
+                <div class="amount" id="totalBalance">৳0.00</div>
+            </div>
+            <div class="card income">
+                <h3>মোট আয়</h3>
+                <div class="amount" id="totalIncome">৳0.00</div>
+            </div>
+            <div class="card expense">
+                <h3>মোট খরচ</h3>
+                <div class="amount" id="totalExpense">৳0.00</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2><i class="fas fa-plus-circle"></i> নতুন লেনদেন যোগ করুন</h2>
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label>লেনদেনের ধরন</label>
+                        <select id="type" required>
+                            <option value="income">আয়</option>
+                            <option value="expense">খরচ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>পরিমাণ (টাকা)</label>
+                        <input type="number" id="amount" step="0.01" required placeholder="যেমন: 5000">
+                    </div>
+                    <div class="form-group">
+                        <label>ক্যাটাগরি</label>
+                        <select id="category" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>বিবরণ</label>
+                        <input type="text" id="description" required placeholder="কেন/কীভাবে খরচ করলেন?">
+                    </div>
+                    <div class="form-group">
+                        <label>তারিখ</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-save"></i> লেনদেন যোগ করুন
+                    </button>
+                </form>
+                <div class="stats-info">
+                    <p><i class="fas fa-chart-line"></i> মোট লেনদেন: <span id="totalTransactions">0</span> টি</p>
+                </div>
+            </div>
+
+            <div class="transactions-section">
+                <h2><i class="fas fa-list"></i> সাম্প্রতিক লেনদেন</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">সব</button>
+                    <button class="filter-btn" data-filter="income">আয়</button>
+                    <button class="filter-btn" data-filter="expense">খরচ</button>
+                </div>
+                <div class="transactions-list" id="transactionsList">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-pulse"></i> লেনদেন লোড হচ্ছে...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-tags"></i> ক্যাটাগরি ব্যবস্থাপনা</h2>
+                <span class="close-modal" id="closeModalBtn">&times;</span>
+            </div>
+            <div class="category-tabs">
+                <button class="category-tab active" data-cat-tab="income">আয়ের ক্যাটাগরি</button>
+                <button class="category-tab" data-cat-tab="expense">খরচের ক্যাটাগরি</button>
+            </div>
+            <div id="categoryList" class="category-list"></div>
+            <div class="add-category-form">
+                <input type="text" id="newCategoryName" placeholder="নতুন ক্যাটাগরি নাম দিন">
+                <button id="addCategoryBtn">যোগ করুন</button>
+            </div>
+            <div class="info-text">
+                <i class="fas fa-info-circle"></i> আপনার প্রয়োজন অনুযায়ী ক্যাটাগরি তৈরি করুন!
+            </div>
+            <div class="warning-text">
+                <i class="fas fa-exclamation-triangle"></i>
+                সতর্কতা: ক্যাটাগরি ডিলিট করলে সব লেনদেন "অন্যান্য" ক্যাটাগরিতে চলে যাবে
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
